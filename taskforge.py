@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import json
 import os
+import sys
 
 COR_FUNDO = "#0b1122"
 COR_TABELA = "#0d1c40"
@@ -32,7 +33,13 @@ def carregar():
 carregar()
 
 root = tk.Tk()
-root.iconbitmap("icon.ico")
+
+# Ícone compatível com .exe (PyInstaller)
+caminho_base = getattr(sys, "_MEIPASS", os.path.abspath("."))
+icone_path = os.path.join(caminho_base, "icon.ico")
+if os.path.exists(icone_path):
+    root.iconbitmap(icone_path)
+
 root.title("TaskForge")
 root.geometry("700x600")
 root.configure(bg=COR_FUNDO)
@@ -50,19 +57,19 @@ def atualizar_tabela():
 
 def abrir_formulario():
     janela = tk.Toplevel(root)
-    centralizar(janela, 500, 400)
+    centralizar(janela, 700, 550)
     janela.configure(bg="#020b30")
     janela.overrideredirect(True)
 
     frame = tk.Frame(janela, bg="#020b30")
-    frame.pack(padx=20, pady=20)
+    frame.pack(padx=20, pady=20, fill="both", expand=True)
 
     tk.Label(frame, text="NOME", font=("Orbitron", 10), fg="#a0a0ff", bg="#020b30").pack(anchor="w")
-    entry_nome = tk.Entry(frame, width=40)
+    entry_nome = tk.Entry(frame, width=50)
     entry_nome.pack(pady=5)
 
     tk.Label(frame, text="ETAPA", font=("Orbitron", 10), fg="#a0a0ff", bg="#020b30").pack(anchor="w")
-    entry_etapa = tk.Entry(frame, width=40)
+    entry_etapa = tk.Entry(frame, width=50)
     entry_etapa.pack(pady=5)
 
     tk.Label(frame, text="STATUS", font=("Orbitron", 10), fg="#a0a0ff", bg="#020b30").pack(anchor="w")
@@ -71,7 +78,7 @@ def abrir_formulario():
     combo_status.pack(pady=5)
 
     tk.Label(frame, text="DESCRIÇÃO", font=("Orbitron", 10), fg="#a0a0ff", bg="#020b30").pack(anchor="w")
-    entry_desc = tk.Text(frame, width=38, height=5)
+    entry_desc = tk.Text(frame, width=50, height=6)
     entry_desc.pack(pady=5)
 
     def salvar_tarefa():
@@ -109,7 +116,7 @@ def abrir_detalhes(event):
         return
 
     janela = tk.Toplevel(root)
-    centralizar(janela, 600, 500)
+    centralizar(janela, 700, 550)
     janela.configure(bg="#020b30")
     janela.overrideredirect(True)
 
